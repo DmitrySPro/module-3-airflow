@@ -22,7 +22,7 @@ def parse_launch_record(r: dict):
 def load_json(launch_year: int, rocket: str):
     url = 'https://api.spacexdata.com/v3/launches/past'
     payload = {'launch_year': launch_year}
-    if rocket != '':
+    if rocket != '' and rocket != 'all' :
         payload['rocket_id'] = rocket
     headers = {}
     response = requests.request('GET', url, headers = headers, params = payload, allow_redirects=False)
