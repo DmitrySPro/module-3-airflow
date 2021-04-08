@@ -67,3 +67,16 @@ ods_payment = DataProcHiveOperator(
     region='europe-west3',
 )
 
+dm_traffic = DataProcHiveOperator(
+    task_id='dm_traffic',
+    dag=dag,
+    query="""
+        insert overwrite table pdmitry.dm_traffic partition (year='{{ execution_date.year }}') 
+        select user_id, MIN(bytes_received) as MIN_bytes, AVG(bytes_received) as AVG_bytes, MAX(bytes_received) as MAX_bytes from pdmitry.ods_traffic where year = {{ execution_date.year }};
+    """,
+    cluster_name='cluster-dataproc',
+    job_name=USERNAME + '_dm_traffic_{{ execution_date.year }}_{{ params.job_suffix }}',
+    params={"job_suffix": randint(0, 100000)},
+    region='europe-west3',
+)
+
