@@ -80,3 +80,4 @@ dm_traffic = DataProcHiveOperator(
     region='europe-west3',
 )
 
+ods_billing>>ods_traffic>>ods_issue>>ods_payment>>dm_traffic
