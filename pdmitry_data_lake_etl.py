@@ -72,7 +72,7 @@ dm_traffic = DataProcHiveOperator(
     dag=dag,
     query="""
         insert overwrite table pdmitry.dm_traffic partition (year='{{ execution_date.year }}') 
-        select user_id, min(bytes_received) as MIN_bytes, avg(bytes_received) as AVG_bytes, max(bytes_received) as MAX_bytes from pdmitry.ods_traffic where year(event_ts) = {{ execution_date.year }};
+        select user_id, min(bytes_received) as MIN_bytes, avg(bytes_received) as AVG_bytes, max(bytes_received) as MAX_bytes from pdmitry.ods_traffic where year = {{ execution_date.year }};
     """,
     cluster_name='cluster-dataproc',
     job_name=USERNAME + '_dm_traffic_{{ execution_date.year }}_{{ params.job_suffix }}',
