@@ -33,7 +33,7 @@ dds_payment_hub = PostgresOperator(
                 pay_id,
                 load_date,
                 row_number() over (partition by pay_id order by load_date desc) as row_num
-            from ods.hashed_payment
+            from ods_hashed_payment
         ) as h
         where h.row_num = 1
     """
@@ -57,7 +57,7 @@ dds_link_user_payment = PostgresOperator(
                     link_paymnet_account,
                     load_date,
                     row_number() over (partition by link_paymnet_account order by load_date desc) as row_num
-                from ods.hashed_payment
+                from ods_hashed_payment
             ) as l
             where row_num = 1
         )
