@@ -66,7 +66,7 @@ dds_link_user_payment = PostgresOperator(
             record_source,
             pay_id,
             user_id,
-            link_paymnet_account,
+            link_payment_account,
             load_date
         from row_rank
     """
