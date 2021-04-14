@@ -54,9 +54,9 @@ dds_link_user_payment = PostgresOperator(
                     record_source,
                     pay_id,
                     user_id,
-                    link_paymnet_account,
+                    link_payment_account,
                     load_date,
-                    row_number() over (partition by link_paymnet_account order by load_date desc) as row_num
+                    row_number() over (partition by link_payment_account order by load_date desc) as row_num
                 from ods_hashed_payment
             ) as l
             where row_num = 1
