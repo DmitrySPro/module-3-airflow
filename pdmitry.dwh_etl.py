@@ -23,7 +23,7 @@ ods_year_temp_view_update = PostgresOperator(
     dag=dag,
     sql="""
         create or replace view pdmitry.ods_year_temp_view as (
-        select * from ods_payment where EXTRACT(year from pay_date) = {{ execution_date.year }});
+        select * from pdmitry.ods_payment where EXTRACT(year from pay_date) = {{ execution_date.year }});
     """
 )
 dds_hub_user = PostgresOperator(
