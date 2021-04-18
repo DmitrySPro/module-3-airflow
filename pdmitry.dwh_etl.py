@@ -110,7 +110,7 @@ dds_link_user_account = PostgresOperator(
     sql="""
     insert into pdmitry.dds_link_user_account select USER_ACCOUNT_PK, USER_PK, ACCOUNT_PK, LOAD_DATE, RECORD_SOURCE from (
     select distinct stg.USER_ACCOUNT_PK, stg.USER_PK, stg.ACCOUNT_PK, stg.LOAD_DATE, stg.RECORD_SOURCE
-        from ods_v_payment as stg
+        from pdmitry.ods_v_payment as stg
         left join pdmitry.dds_link_user_account as tgt on stg.USER_ACCOUNT_PK = tgt.USER_ACCOUNT_PK where tgt.USER_ACCOUNT_PK is NULL
     ) as dti;
     """
@@ -122,7 +122,7 @@ dds_link_account_billing_payment = PostgresOperator(
     sql="""
     insert into pdmitry.dds_link_account_billing_payment select PAY_PK, ACCOUNT_PK, PAYMENT_PK, BILLING_PERIOD_PK, LOAD_DATE, RECORD_SOURCE from (
         select distinct stg.PAY_PK, stg.ACCOUNT_PK, stg.PAYMENT_PK, stg.BILLING_PERIOD_PK, stg.LOAD_DATE, stg.RECORD_SOURCE
-        from ods_v_payment as stg
+        from pdmitry.ods_v_payment as stg
         left join pdmitry.dds_link_account_billing_payment as tgt on stg.PAY_PK = tgt.PAY_PK where tgt.PAY_PK is NULL
      ) as dti;
     """
