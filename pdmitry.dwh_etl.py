@@ -22,9 +22,7 @@ ods_year_temp_view_update = PostgresOperator(
  task_id="ods_year_temp_view",
     dag=dag,
     sql="""
-        drop view if exists pdmitry.ods_v_payment_{{ execution_date.year }} cascade;
-        create view pdmitry.ods_v_payment_{{ execution_date.year }} as (
-
+    create or replace view pdmitry.ods_v_payment_{{ execution_date.year }} as (
     with derived_columns as (
         select user_id,
                pay_doc_type,
