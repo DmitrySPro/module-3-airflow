@@ -91,7 +91,7 @@ ods_year_temp_view_update = PostgresOperator(
 
             from derived_columns)
 
-select * from hashed_columns);;
+select * from hashed_columns);
     """
 )
 dds_hub_user = PostgresOperator(
