@@ -220,7 +220,7 @@ with source_data as (
      records_to_insert as (
          select distinct e.USER_PK, e.USER_HASHDIF, e.phone, e.EFFECTIVE_FROM, e.LOAD_DATE, e.RECORD_SOURCE
          from source_data as e
-         left join latest_records on latest_records.USER_HASHDIF=e.USER_HASHDIF
+         left join latest_records on latest_records.USER_HASHDIF=e.USER_HASHDIF and latest_records.USER_PK=e.USER_PK
          where latest_records.USER_HASHDIF is null
           )
      select * from records_to_insert) as dti;
@@ -248,7 +248,7 @@ with source_data as (
      records_to_insert as (
          select distinct e.PAYMENT_PK, e.PAYMENT_HASHDIF, e.pay_date, e.sum, e.EFFECTIVE_FROM, e.LOAD_DATE, e.RECORD_SOURCE
          from source_data as e
-         left join latest_records on latest_records.PAYMENT_HASHDIF=e.PAYMENT_HASHDIF
+         left join latest_records on latest_records.PAYMENT_HASHDIF=e.PAYMENT_HASHDIF and latest_records.PAYMENT_PK=e.PAYMENT_PK
          where latest_records.PAYMENT_HASHDIF is null
           )
      select * from records_to_insert) as dti;
