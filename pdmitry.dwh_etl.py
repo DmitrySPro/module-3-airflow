@@ -150,7 +150,7 @@ dds_sat_user = PostgresOperator(
     """
 )
         
- dds_sat_payment = PostgresOperator(
+dds_sat_payment = PostgresOperator(
     task_id="dds_sat_payment",
     dag=dag,
     sql="""
