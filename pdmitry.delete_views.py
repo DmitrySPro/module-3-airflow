@@ -3,7 +3,6 @@ from random import randint
 
 from airflow import DAG
 from airflow.operators.postgres_operator import PostgresOperator
-from airflow.operators.dummy_operator import DummyOperator
 
 USERNAME = 'pdmitry'
 
@@ -15,7 +14,7 @@ default_args = {
 dag = DAG(
     USERNAME + '_my_views',
     default_args=default_args,
-    description='DWH ETL tasks',
+    description='DWH tasks',
     schedule_interval="0 0 1 1 *",
 )
 ods_year_temp_view_update = PostgresOperator(
