@@ -100,7 +100,7 @@ dds_link_user_account = PostgresOperator(
     sql="""
     insert into pdmitry.dds_link_user_account (USER_ACCOUNT_PK, USER_PK, ACCOUNT_PK, LOAD_DATE, RECORD_SOURCE)
     SELECT USER_ACCOUNT_PK, USER_PK, ACCOUNT_PK, LOAD_DATE, RECORD_SOURCE
-    FROM pdmitry.dds_link_user_account_etl
+    FROM pdmitry.view_link_user_account_etl
     """
 )
 dds_link_account_billing_payment = PostgresOperator(
