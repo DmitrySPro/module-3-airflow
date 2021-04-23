@@ -73,7 +73,7 @@ dds_hub_billing_period = PostgresOperator(
     dag=dag,
     sql="""
         insert into pdmitry.dds_hub_billing_period (BILLING_PERIOD_PK, BILLING_PERIOD_KEY, LOAD_DATE, RECORD_SOURCE)
-        SELECT "BILLING_PERIOD_PK", "BILLING_PERIOD_KEY", "LOAD_DATE", "RECORD_SOURCE"
+        SELECT BILLING_PERIOD_PK, BILLING_PERIOD_KEY, LOAD_DATE, RECORD_SOURCE
         FROM pdmitry.view_hub_billing_period_etl
     """
 )
