@@ -125,7 +125,7 @@ dds_sat_user = PostgresOperator(
         insert into pdmitry.dds_sat_user (user_pk, user_hashdif, phone, effective_from, load_date, record_source)
         with source_data as (
         select a.USER_PK, a.USER_HASHDIF, a.phone, a.EFFECTIVE_FROM, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.ods_payment_hashed as a
-        WHERE a.LOAD_DATE <= '{{ execution_date }}'::TIMESTAMP
+        WHERE a.LOAD_DATE = '{{ execution_date }}'::TIMESTAMP
         ),
         update_records as (
         select a.USER_PK, a.USER_HASHDIF, a.phone, a.EFFECTIVE_FROM, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.dds_sat_user as a
@@ -157,7 +157,7 @@ dds_sat_payment = PostgresOperator(
     insert into pdmitry.dds_sat_payment (PAYMENT_pk, PAYMENT_hashdif, pay_date, sum, effective_from, load_date, record_source)
     with source_data as (
     select a.PAYMENT_PK, a.PAYMENT_HASHDIF, a.pay_date,a.sum, a.EFFECTIVE_FROM, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.ods_payment_hashed as a
-    WHERE a.LOAD_DATE <= '{{ execution_date }}'::TIMESTAMP
+    WHERE a.LOAD_DATE = '{{ execution_date }}'::TIMESTAMP
     ),
      update_records as (
         select a.PAYMENT_PK, a.PAYMENT_HASHDIF, a.pay_date, a.sum, a.EFFECTIVE_FROM, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.dds_sat_payment as a
