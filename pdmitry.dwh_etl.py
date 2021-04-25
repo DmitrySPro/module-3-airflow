@@ -49,7 +49,7 @@ fill_ods_hashed = PostgresOperator(
     dag=dag,
     sql="""
         INSERT INTO pdmitry.ods_payment_hashed
-        SELECT *, '{{ execution_date }}'::TIMESTAMP AS LOAD_DT FROM pdmitry.ods_v_payment 
+        SELECT *, '{{ execution_date }}'::TIMESTAMP AS LOAD_DATE FROM pdmitry.ods_v_payment 
         WHERE EXTRACT(YEAR FROM pay_date::DATE) = {{ execution_date.year }}
     """
 )
