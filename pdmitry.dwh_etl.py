@@ -16,6 +16,7 @@ dag = DAG(
     USERNAME + '_dwh_etl',
     default_args=default_args,
     description='DWH ETL tasks',
+    max_active_runs=1,
     schedule_interval="0 0 1 1 *",
 )
 clear_ods = PostgresOperator(
