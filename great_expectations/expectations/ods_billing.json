@@ -1,0 +1,199 @@
+{
+  "data_asset_type": "Dataset",
+  "expectation_suite_name": "ods_billing",
+  "expectations": [
+    {
+      "expectation_type": "expect_table_columns_to_match_ordered_list",
+      "kwargs": {
+        "column_list": [
+          "user_id",
+          "billing_period",
+          "service",
+          "tariff",
+          "sum",
+          "created_at"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_table_row_count_to_be_between",
+      "kwargs": {
+        "max_value": 10000,
+        "min_value": 1
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "user_id"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "user_id",
+        "type_list": [
+          "INTEGER"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "user_id",
+        "min_value": 0
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "billing_period"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "billing_period",
+        "type_list": [
+          "TEXT"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_match_regex",
+      "kwargs": {
+        "column": "billing_period",
+        "regex": "^\\d{4}-\\d{2}"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "service"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "service",
+        "type_list": [
+          "TEXT"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": {
+        "column": "tariff",
+        "value_set": [
+          "Gigabyte",
+          "Maxi",
+          "Megabyte",
+          "Mini"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "tariff"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "tariff",
+        "type_list": [
+          "TEXT"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "sum"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "sum",
+        "min_value": 0
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "sum",
+        "type_list": [
+          "REAL"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "created_at"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "created_at",
+        "type_list": [
+          "DATE"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "created_at",
+        "min_value": "2013-01-01",
+        "parse_strings_as_datetimes": true
+      },
+      "meta": {}
+    }
+  ],
+  "meta": {
+    "columns": {
+      "billing_period": {
+        "description": ""
+      },
+      "created_at": {
+        "description": ""
+      },
+      "service": {
+        "description": ""
+      },
+      "sum": {
+        "description": ""
+      },
+      "tariff": {
+        "description": ""
+      },
+      "user_id": {
+        "description": ""
+      }
+    },
+    "great_expectations_version": "0.13.14"
+  }
+}

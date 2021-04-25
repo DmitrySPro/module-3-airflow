@@ -1,0 +1,203 @@
+{
+  "data_asset_type": "Dataset",
+  "expectation_suite_name": "ods_traffic",
+  "expectations": [
+    {
+      "expectation_type": "expect_table_columns_to_match_ordered_list",
+      "kwargs": {
+        "column_list": [
+          "user_id",
+          "event_ts",
+          "device_id",
+          "device_ip_addr",
+          "bytes_sent",
+          "bytes_received"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_table_row_count_to_be_between",
+      "kwargs": {
+        "max_value": 10000,
+        "min_value": 1
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "user_id"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "user_id",
+        "type_list": [
+          "INTEGER"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "user_id",
+        "min_value": 0
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "event_ts"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "event_ts",
+        "type_list": [
+          "TIMESTAMP"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "event_ts",
+        "min_value": "2013-01-01",
+        "parse_strings_as_datetimes": true
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "device_id"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_proportion_of_unique_values_to_be_between",
+      "kwargs": {
+        "column": "device_id",
+        "max_value": 0.0009,
+        "min_value": 0.0009
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "device_id",
+        "type_list": [
+          "TEXT"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "device_ip_addr"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "device_ip_addr",
+        "type_list": [
+          "TEXT"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_match_regex",
+      "kwargs": {
+        "column": "device_ip_addr",
+        "regex": "^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "bytes_sent"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "bytes_sent",
+        "type_list": [
+          "INTEGER"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "bytes_sent",
+        "min_value": 0
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "bytes_received"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "bytes_received",
+        "type_list": [
+          "INTEGER"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "bytes_received",
+        "min_value": 0
+      },
+      "meta": {}
+    }
+  ],
+  "meta": {
+    "columns": {
+      "bytes_received": {
+        "description": ""
+      },
+      "bytes_sent": {
+        "description": ""
+      },
+      "device_id": {
+        "description": ""
+      },
+      "device_ip_addr": {
+        "description": ""
+      },
+      "event_ts": {
+        "description": ""
+      },
+      "user_id": {
+        "description": ""
+      }
+    },
+    "great_expectations_version": "0.13.14"
+  }
+}

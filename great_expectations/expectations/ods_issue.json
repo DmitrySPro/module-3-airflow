@@ -1,0 +1,206 @@
+{
+  "data_asset_type": "Dataset",
+  "expectation_suite_name": "ods_issue",
+  "expectations": [
+    {
+      "expectation_type": "expect_table_columns_to_match_ordered_list",
+      "kwargs": {
+        "column_list": [
+          "user_id",
+          "start_time",
+          "end_time",
+          "title",
+          "description",
+          "service"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_table_row_count_to_be_between",
+      "kwargs": {
+        "max_value": 10000,
+        "min_value": 1
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "user_id"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "user_id",
+        "type_list": [
+          "INTEGER"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "user_id",
+        "min_value": 0
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "start_time"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "start_time",
+        "type_list": [
+          "TIMESTAMP"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "start_time",
+        "min_value": "2013-01-01",
+        "parse_strings_as_datetimes": true
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "end_time"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "end_time",
+        "type_list": [
+          "DATETIME",
+          "DATE",
+          "TIME",
+          "TIMESTAMP",
+          "DateType",
+          "TimestampType",
+          "datetime64",
+          "Timestamp",
+          "datetime64[ns]"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "end_time",
+        "min_value": "2013-01-01",
+        "parse_strings_as_datetimes": true
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "title"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "title",
+        "type_list": [
+          "TEXT"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "description"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "description",
+        "type_list": [
+          "CHAR",
+          "VARCHAR",
+          "NVARCHAR",
+          "TEXT",
+          "STRING",
+          "StringType",
+          "string",
+          "str"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": {
+        "column": "service",
+        "value_set": [
+          "Connect",
+          "Disconnect",
+          "Setup Environment"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "service"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "service",
+        "type_list": [
+          "TEXT"
+        ]
+      },
+      "meta": {}
+    }
+  ],
+  "meta": {
+    "columns": {
+      "description": {
+        "description": ""
+      },
+      "end_time": {
+        "description": ""
+      },
+      "service": {
+        "description": ""
+      },
+      "start_time": {
+        "description": ""
+      },
+      "title": {
+        "description": ""
+      },
+      "user_id": {
+        "description": ""
+      }
+    },
+    "great_expectations_version": "0.13.14"
+  }
+}
