@@ -87,15 +87,7 @@
       "kwargs": {
         "column": "end_time",
         "type_list": [
-          "DATETIME",
-          "DATE",
-          "TIME",
-          "TIMESTAMP",
-          "DateType",
-          "TimestampType",
-          "datetime64",
-          "Timestamp",
-          "datetime64[ns]"
+          "TIMESTAMP"
         ]
       },
       "meta": {}
@@ -138,14 +130,7 @@
       "kwargs": {
         "column": "description",
         "type_list": [
-          "CHAR",
-          "VARCHAR",
-          "NVARCHAR",
-          "TEXT",
-          "STRING",
-          "StringType",
-          "string",
-          "str"
+          "TEXT"
         ]
       },
       "meta": {}

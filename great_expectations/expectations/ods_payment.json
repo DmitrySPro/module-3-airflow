@@ -92,8 +92,7 @@
       "kwargs": {
         "column": "pay_doc_num",
         "type_list": [
-          "INTEGER",
-          "integer"
+          "INTEGER"
         ]
       },
       "meta": {}
@@ -152,14 +151,7 @@
       "kwargs": {
         "column": "phone",
         "type_list": [
-          "CHAR",
-          "VARCHAR",
-          "NVARCHAR",
-          "TEXT",
-          "STRING",
-          "StringType",
-          "string",
-          "str"
+          "TEXT"
         ]
       },
       "meta": {}
@@ -209,7 +201,8 @@
       "expectation_type": "expect_column_values_to_be_between",
       "kwargs": {
         "column": "pay_date",
-        "min_value": "2013-01-01"
+        "min_value": "2013-01-01",
+        "parse_strings_as_datetimes": true
       },
       "meta": {}
     },
