@@ -16,6 +16,7 @@ dag = DAG(
     USERNAME + '_dwh_etl',
     default_args=default_args,
     description='DWH ETL tasks',
+    max_active_runs=1,
     schedule_interval="0 0 1 1 *",
 )
 clear_ods = PostgresOperator(
@@ -49,7 +50,7 @@ fill_ods_hashed = PostgresOperator(
     dag=dag,
     sql="""
         INSERT INTO pdmitry.ods_payment_hashed
-        SELECT *, '{{ execution_date }}'::TIMESTAMP AS LOAD_DT FROM pdmitry.ods_v_payment 
+        SELECT *, '{{ execution_date }}'::TIMESTAMP AS LOAD_DATE FROM pdmitry.ods_v_payment 
         WHERE EXTRACT(YEAR FROM pay_date::DATE) = {{ execution_date.year }}
     """
 )
@@ -125,7 +126,7 @@ dds_sat_user = PostgresOperator(
         insert into pdmitry.dds_sat_user (user_pk, user_hashdif, phone, effective_from, load_date, record_source)
         with source_data as (
         select a.USER_PK, a.USER_HASHDIF, a.phone, a.EFFECTIVE_FROM, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.ods_payment_hashed as a
-        WHERE a.LOAD_DATE <= '{{ execution_date }}'::TIMESTAMP
+        WHERE a.LOAD_DATE = '{{ execution_date }}'::TIMESTAMP
         ),
         update_records as (
         select a.USER_PK, a.USER_HASHDIF, a.phone, a.EFFECTIVE_FROM, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.dds_sat_user as a
@@ -157,7 +158,7 @@ dds_sat_payment = PostgresOperator(
     insert into pdmitry.dds_sat_payment (PAYMENT_pk, PAYMENT_hashdif, pay_date, sum, effective_from, load_date, record_source)
     with source_data as (
     select a.PAYMENT_PK, a.PAYMENT_HASHDIF, a.pay_date,a.sum, a.EFFECTIVE_FROM, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.ods_payment_hashed as a
-    WHERE a.LOAD_DATE <= '{{ execution_date }}'::TIMESTAMP
+    WHERE a.LOAD_DATE = '{{ execution_date }}'::TIMESTAMP
     ),
      update_records as (
         select a.PAYMENT_PK, a.PAYMENT_HASHDIF, a.pay_date, a.sum, a.EFFECTIVE_FROM, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.dds_sat_payment as a
