@@ -9,6 +9,7 @@ User_id
 1) expect_column_values_to_not_be_null(column='user_id') - Проверка на пустые значения. В поле не должно быть пустых значений.
 2) expect_column_values_to_be_in_type_list(column='user_id', type_list=['INTEGER']) - Проверка типа данных. Поле должно быть типа integer.
 3) expect_column_values_to_be_between(column='user_id', min_value=0) - Значения поля не должны быть отрицательными. Проверка значений что они больше нуля.
+4) expect_column_proportion_of_unique_values_to_be_between(column='user_id', min_value=0.01) - Пропорция уникальных значений не менее 0,01. Так как значения в столбце могут повторяться используем пропорцию. Проверка от ошибок системы источника от которого могут поступить одинаковые значения.
 
 Pay_doc_type
 
@@ -30,8 +31,8 @@ Account
 
 Phone
 
-1) expect_column_values_to_not_be_null(column='phone') - Проверка на пустые значения. В поле не должно быть пустых значений.
-2) expect_column_proportion_of_unique_values_to_be_between(column='phone', max_value=0.9994, min_value=0.9994) - Тест предложен автогенерацией. Показывает что долю уникальных значений в поле должна быть в заданных пределах. Телефоны могут повторяться, но зная наш датасет, что повторов всего 6 решил оставить тест.
+1) expect_column_values_to_not_be_null(column='phone') - Проверка на пустые значения. В поле не должно быть пустых значений. Теоретически поле может быть пустым но в нашем датасете это не так, поэтому предполагаем что пре регистрации телефон обязателен.
+2) expect_column_proportion_of_unique_values_to_be_between(column='phone', max_value=0.9994, min_value=0.9994) - Показывает что долю уникальных значений в поле должна быть в заданных пределах. Телефоны могут повторяться, но зная наш датасет, что повторов всего 6 решил оставить тест.
 3) expect_column_value_lengths_to_be_between(column='phone', min_value=10, max_value=12) = Проверка длинны строки. Телефон без префикса страны содержит 10 символов с префиксом 12.
 4) batch.expect_column_values_to_be_in_type_list(column='phone', type_list=['TEXT']) - Проверка типа данных. Поле должно быть типа TEXT.
 
@@ -51,7 +52,7 @@ Sum
 
 1) expect_column_values_to_not_be_null(column='sum') - Проверка на пустые значения. В поле не должно быть пустых значений.
 2) expect_column_values_to_be_in_type_list(column='sum', type_list=['REAL']) - Проверка типа данных. Поле должно быть типа REAL.
-3) expect_column_values_to_be_between(column='sum', min_value=0) - Сумма платежа не может быть отрицательной. Проверяем что все значения больше 0.
+3) expect_column_values_to_be_between(column='sum', min_value=0, max_value = 999999) - Сумма платежа не может быть отрицательной. Проверяем что все значения больше 0, а также что мы не получили черзмерно большие суммы от источника. Максимум у нас в датасете 49 тысяч, устанавливаю планку в 999999 с запасом, учитывая что могут быть юр. лица которые платят сотни тысяч..
 
 
 ods_issue
@@ -65,6 +66,7 @@ User_id
 1) expect_column_values_to_not_be_null(column='user_id') - Проверка на пустые значения. В поле не должно быть пустых значений.
 2) expect_column_values_to_be_in_type_list(column='user_id', type_list=['INTEGER']) - Проверка типа данных. Поле должно быть типа integer.
 3) expect_column_values_to_be_between(column='user_id', min_value=0) - Значения поля не должны быть отрицательными. Проверка значений что они больше нуля.
+4) expect_column_proportion_of_unique_values_to_be_between(column='user_id', min_value=0.01) - Пропорция уникальных значений не менее 0,01. Так как значения в столбце могут повторяться используем пропорцию. Проверка от ошибок системы источника от которого могут поступить одинаковые значения.
 
 start_time
 
@@ -107,6 +109,7 @@ User_id
 1) expect_column_values_to_not_be_null(column='user_id') - Проверка на пустые значения. В поле не должно быть пустых значений.
 2) expect_column_values_to_be_in_type_list(column='user_id', type_list=['INTEGER']) - Проверка типа данных. Поле должно быть типа integer.
 3) expect_column_values_to_be_between(column='user_id', min_value=0) - Значения поля не должны быть отрицательными. Проверка значений что они больше нуля.
+4) expect_column_proportion_of_unique_values_to_be_between(column='user_id', min_value=0.01) - Пропорция уникальных значений не менее 0,01. Так как значения в столбце могут повторяться используем пропорцию. Проверка от ошибок системы источника от которого могут поступить одинаковые значения.
 
 event_ts
 
@@ -128,13 +131,13 @@ device_ip_addr
 bytes_sent
 1) expect_column_values_to_not_be_null(column='bytes_sent') - Проверка на пустые значения. В поле не должно быть пустых значений.
 2) expect_column_values_to_be_in_type_list(column='bytes_sent', type_list=['INTEGER']) - Проверка типа данных. Поле должно быть типа integer.
-3) expect_column_values_to_be_between(column='bytes_sent', min_value=0) - Проверка на корректность данных. Количество должно быть больше или равно нулю.
+3) expect_column_values_to_be_between(column='bytes_sent', min_value=0, max_value=100000) - Проверка на корректность данных. Количество должно быть больше или равно нулю. Максимум в нашем датасете 49996. Если учесть что это байты то в целом это довольно мало, но незная из какой системы источника данные сложно оценить теоретический максимум, установил максимальную планку в 2 раза выше, если значения будут больше это причина обратить на это внимание.
 
 bytes_recieved
 
 1) expect_column_values_to_not_be_null(column='bytes_recieved') - Проверка на пустые значения. В поле не должно быть пустых значений.
 2) expect_column_values_to_be_in_type_list(column='bytes_recieved', type_list=['INTEGER']) - Проверка типа данных. Поле должно быть типа integer.
-3) expect_column_values_to_be_between(column='bytes_recieved', min_value=0) - Проверка на корректность данных. Количество должно быть больше или равно нулю.
+3) expect_column_values_to_be_between(column='bytes_recieved', min_value=0, max_value=100000) - Проверка на корректность данных. Количество должно быть больше или равно нулю. Максимум в нашем датасете 49999. Если учесть что это байты то в целом это довольно мало, но незная из какой системы источника данные сложно оценить теоретический максимум, установил максимальную планку в 2 раза выше, если значения будут больше это причина обратить на это внимание..
 
 ods_billing
 
@@ -148,12 +151,14 @@ User_id
 1) expect_column_values_to_not_be_null(column='user_id') - Проверка на пустые значения. В поле не должно быть пустых значений.
 2) expect_column_values_to_be_in_type_list(column='user_id', type_list=['INTEGER']) - Проверка типа данных. Поле должно быть типа integer.
 3) expect_column_values_to_be_between(column='user_id', min_value=0) - Значения поля не должны быть отрицательными. Проверка значений что они больше нуля.
+4) expect_column_proportion_of_unique_values_to_be_between(column='user_id', min_value=0.01) - Пропорция уникальных значений не менее 0,01. Так как значения в столбце могут повторяться используем пропорцию. Проверка от ошибок системы источника от которого могут поступить одинаковые значения.
 
 billing_period
 
 1) expect_column_values_to_not_be_null(column='billing_period') - Проверка на пустые значения. В поле не должно быть пустых значений.
 2) expect_column_values_to_be_in_type_list(column='billing_period', type_list=['TEXT']) - Проверка типа данных. Поле должно быть типа TEXT.
 3) expect_column_values_to_match_regex(column='billing_period', regex='^\\d{4}-\\d{2}') - Проверка корректности значений поля. В поле содержится год(4 цифры)-месяц(2 цифры). Проверятеся соответствие значений этому паттерну.
+4) batch.expect_column_values_to_match_strftime_format(column='billing_period', strftime_format = "%Y-%d" ) - Проверка на приводимость к типу даты. Почему то не заработала. NotImplementedError.
 
 service
 
@@ -170,7 +175,8 @@ sum
 
 1) expect_column_values_to_not_be_null(column='sum') - Проверка на пустые значения. В поле не должно быть пустых значений.
 2) expect_column_values_to_be_in_type_list(column='sum', type_list=['REAL']) - Проверка типа данных. Поле должно быть типа REAL.
-3) expect_column_values_to_be_between(column='sum', min_value=0) - Сумма платежа не может быть отрицательной. Проверяем что все значения больше 0.
+3) expect_column_values_to_be_between(column='sum', min_value=0, max_value = 999999) - Сумма платежа не может быть отрицательной. Проверяем что все значения больше 0, а также что мы не получили черзмерно большие суммы от источника. Максимум у нас в датасете 49 тысяч, устанавливаю планку в 999999 с запасом, учитывая что могут быть юр. лица которые платят сотни тысяч.
+
 
 created_at
 
