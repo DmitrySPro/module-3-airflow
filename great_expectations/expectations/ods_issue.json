@@ -50,6 +50,14 @@
       "meta": {}
     },
     {
+      "expectation_type": "expect_column_proportion_of_unique_values_to_be_between",
+      "kwargs": {
+        "column": "user_id",
+        "min_value": 0.01
+      },
+      "meta": {}
+    },
+    {
       "expectation_type": "expect_column_values_to_not_be_null",
       "kwargs": {
         "column": "start_time"
