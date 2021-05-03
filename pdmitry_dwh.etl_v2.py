@@ -26,9 +26,17 @@ clear_ods = PostgresOperator(
         DELETE FROM pdmitry.ods_payment WHERE EXTRACT(YEAR FROM pay_date::DATE) = {{ execution_date.year }}
     """
 )
+clear_ods_mdm = PostgresOperator(
+    task_id="clear_ods_mdm_user",
+    dag=dag,
+    sql="""
+        DELETE FROM pdmitry.ods_mdm_user WHERE EXTRACT(YEAR FROM registered_at::DATE) = {{ execution_date.year }}
+    """
+)
+
 
 fill_ods = PostgresOperator(
-    task_id="fill_ods",
+    task_id="fill_ods_v2",
     dag=dag,
     sql="""
         INSERT INTO pdmitry.ods_payment
@@ -36,6 +44,17 @@ fill_ods = PostgresOperator(
         WHERE EXTRACT(YEAR FROM pay_date::DATE) = {{ execution_date.year }}
     """
 )
+
+fill_ods_mdm = PostgresOperator(
+    task_id="fill_ods_mdm",
+    dag=dag,
+    sql="""
+        INSERT INTO pdmitry.ods_mdm_user
+        SELECT * FROM mdm.user 
+        WHERE EXTRACT(YEAR FROM registered_at::DATE) = {{ execution_date.year }}
+    """
+)
+
 
 clear_ods_hashed = PostgresOperator(
     task_id="clear_ods_hashed_v2",
@@ -45,8 +64,17 @@ clear_ods_hashed = PostgresOperator(
     """
 )
 
+clear_ods_mdm_hashed = PostgresOperator(
+    task_id="clear_ods_mdm_hashed_v2",
+    dag=dag,
+    sql="""
+        DELETE FROM pdmitry.ods_mdm_hashed_v2 WHERE EXTRACT(YEAR FROM registered_at::DATE) = {{ execution_date.year }}
+    """
+)
+
+
 fill_ods_hashed = PostgresOperator(
-    task_id="fill_ods_hashed",
+    task_id="fill_ods_hashed_v2",
     dag=dag,
     sql="""
         INSERT INTO pdmitry.ods_payment_hashed_v2
@@ -54,10 +82,18 @@ fill_ods_hashed = PostgresOperator(
         WHERE EXTRACT(YEAR FROM pay_date::DATE) = {{ execution_date.year }}
     """
 )
-
+fill_ods_mdm_hashed = PostgresOperator(
+    task_id="fill_ods_mdm_hashed_v2",
+    dag=dag,
+    sql="""
+        INSERT INTO pdmitry.ods_mdm_hashed_v2
+        SELECT *, '{{ execution_date }}'::TIMESTAMP AS LOAD_DATE FROM pdmitry.mdm_v_payment_v2 
+        WHERE EXTRACT(YEAR FROM registered_at::DATE) = {{ execution_date.year }}
+    """
+)
 ods_loaded = DummyOperator(task_id="ods_loaded", dag=dag)
 
-clear_ods >> fill_ods >> clear_ods_hashed >> fill_ods_hashed >> ods_loaded
+clear_ods >>clear_ods_mdm>> fill_ods >> fill_ods_mdm >> clear_ods_hashed >>clear_ods_mdm_hashed >> fill_ods_hashed >> fill_ods_mdm_hashed>> ods_loaded
 
 dds_hub_user = PostgresOperator(
     task_id="dds_hub_user_v2",
@@ -83,7 +119,7 @@ dds_hub_account = PostgresOperator(
     task_id="dds_hub_account_v2",
     dag=dag,
     sql="""
-        insert into pdmitry.dds_hub_account (ACCOUNT_PK, ACCOUNT_KEY, LOAD_DATE, RECORD_SOURCE)
+        insert into pdmitry.dds_hub_account_v2 (ACCOUNT_PK, ACCOUNT_KEY, LOAD_DATE, RECORD_SOURCE)
         SELECT ACCOUNT_PK, ACCOUNT_KEY, LOAD_DATE, RECORD_SOURCE
         FROM pdmitry.view_hub_account_etl_v2
     """
@@ -110,8 +146,8 @@ all_links_loaded = DummyOperator(task_id="all_links_loaded", dag=dag)
 all_hubs_loaded >> dds_link_payment >> all_links_loaded
 
 
-dds_sat_user = PostgresOperator(
-    task_id="dds_sat_user",
+dds_sat_user_v2 = PostgresOperator(
+    task_id="dds_sat_user_v2",
     dag=dag,
     sql="""
         insert into pdmitry.dds_sat_user_v2 (user_pk, user_hashdif, phone, effective_from, load_date, record_source)
@@ -143,8 +179,8 @@ dds_sat_user = PostgresOperator(
     """
 )
         
-dds_sat_link_payment = PostgresOperator(
-    task_id="dds_sat_link_payment",
+dds_sat_link_payment_v2 = PostgresOperator(
+    task_id="dds_sat_link_payment_v2",
     dag=dag,
     sql="""
     insert into pdmitry.dds_sat_link_payment_v2 (PAY_PK, pay_doc_num, pay_doc_type, PAYMENT_HASHDIF, pay_date, sum, EFFECTIVE_FROM, LOAD_DATE, RECORD_SOURCE)
@@ -176,17 +212,17 @@ dds_sat_link_payment = PostgresOperator(
 
     """
 )   
-dds_sat_mdm = PostgresOperator(
-    task_id="dds_sat_mdm",
+dds_sat_mdm_v2 = PostgresOperator(
+    task_id="dds_sat_mdm_v2",
     dag=dag,
     sql="""
-    insert into pdmitry.dds_sat_mdm (USER_PK, legal_type, district, registered_at, billing_mode, is_vip, mdm_hashdif, LOAD_DATE, RECORD_SOURCE)
+    insert into pdmitry.dds_sat_mdm_v2 (USER_PK, legal_type, district, registered_at, billing_mode, is_vip, mdm_hashdif, LOAD_DATE, RECORD_SOURCE)
     with source_data as (
-    select a.USER_PK, a.legal_type, a.district, a.registered_at, a.billing_mode, a.is_vip, a.mdm_hashdif, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.ods_mdm_hashed as a
+    select a.USER_PK, a.legal_type, a.district, a.registered_at, a.billing_mode, a.is_vip, a.mdm_hashdif, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.ods_mdm_hashed_v2 as a
     WHERE a.LOAD_DATE = '{{ execution_date }}'::TIMESTAMP
     ),
      update_records as (
-        select a.USER_PK, a.legal_type, a.district, a.registered_at, a.billing_mode, a.is_vip, a.mdm_hashdif, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.dds_sat_mdm as a
+        select a.USER_PK, a.legal_type, a.district, a.registered_at, a.billing_mode, a.is_vip, a.mdm_hashdif, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.dds_sat_mdm_v2 as a
         join source_data as b on a.USER_PK = b.USER_PK AND a.LOAD_DATE <= (SELECT max(LOAD_DATE) from source_data)
      ),
      latest_records as (
@@ -204,7 +240,9 @@ dds_sat_mdm = PostgresOperator(
          left join latest_records on latest_records.MDM_HASHDIF=e.MDM_HASHDIF and latest_records.USER_PK=e.USER_PK
          where latest_records.MDM_HASHDIF is null
           )
-     select * from records_to_insert
+     select * from records_to_insert;
     """
-)
-all_links_loaded >> dds_sat_user >> dds_sat_link_payment >> dds_sat_mdm
+)   
+
+
+all_links_loaded >> dds_sat_user_v2 >> dds_sat_link_payment_v2 >> dds_sat_mdm_v2
