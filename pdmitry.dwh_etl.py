@@ -121,7 +121,7 @@ dds_link_user_account_billing_payment = PostgresOperator(
 
 all_links_loaded = DummyOperator(task_id="all_links_loaded", dag=dag)
 
-all_hubs_loaded >> dds_link_user_account >> dds_link_account_billing_payment >> all_links_loaded
+all_hubs_loaded >> dds_link_user_account_billing_payment >> all_links_loaded
 
 
 dds_sat_user = PostgresOperator(
