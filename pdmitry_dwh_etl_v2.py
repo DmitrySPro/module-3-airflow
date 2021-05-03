@@ -20,7 +20,7 @@ dag = DAG(
     schedule_interval="0 0 1 1 *",
 )
 clear_ods = PostgresOperator(
-    task_id="clear_ods",
+    task_id="clear_ods_payment",
     dag=dag,
     sql="""
         DELETE FROM pdmitry.ods_payment WHERE EXTRACT(YEAR FROM pay_date::DATE) = {{ execution_date.year }}
@@ -36,7 +36,7 @@ clear_ods_mdm = PostgresOperator(
 
 
 fill_ods = PostgresOperator(
-    task_id="fill_ods_v2",
+    task_id="fill_ods",
     dag=dag,
     sql="""
         INSERT INTO pdmitry.ods_payment
