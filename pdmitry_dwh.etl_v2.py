@@ -212,6 +212,7 @@ dds_sat_link_payment_v2 = PostgresOperator(
 
     """
 )   
+
 dds_sat_mdm_v2 = PostgresOperator(
     task_id="dds_sat_mdm_v2",
     dag=dag,
@@ -243,6 +244,5 @@ dds_sat_mdm_v2 = PostgresOperator(
      select * from records_to_insert;
     """
 )   
-
 
 all_links_loaded >> dds_sat_user_v2 >> dds_sat_link_payment_v2 >> dds_sat_mdm_v2
