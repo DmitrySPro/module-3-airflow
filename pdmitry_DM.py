@@ -38,7 +38,7 @@ create_temp_table = PostgresOperator(
         join pdmitry.dds_hub_billing_period_v2 hbp on p.billing_period_pk=hbp.billing_period_pk
         join pdmitry.dds_hub_user_v2 usr on p.user_pk=usr.user_pk
         join pdmitry.dds_sat_link_payment_v2 pmnt on p.pay_pk=pmnt.pay_pk
-        join pdmitry.dds_sat_mdm mdm on usr.user_pk=mdm.user_pk
+        join pdmitry.dds_sat_mdm_v2 mdm on usr.user_pk=mdm.user_pk
     )
     select billing_year, legal_type, district, registration_year, is_vip, sum(billing_sum)
     from raw_data
