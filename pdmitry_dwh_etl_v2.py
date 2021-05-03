@@ -217,7 +217,7 @@ dds_sat_mdm_v2 = PostgresOperator(
     task_id="dds_sat_mdm_v2",
     dag=dag,
     sql="""
-    insert into pdmitry.dds_sat_mdm_v2 (USER_PK, legal_type, district, registered_at, billing_mode, is_vip, mdm_hashdif, LOAD_DATE, RECORD_SOURCE)
+    insert into pdmitry.dds_sat_mdm_v2 (USER_PK, legal_type, district, registered_at, billing_mode, is_vip, mdm_hashdif, effective_from, LOAD_DATE, RECORD_SOURCE)
     with source_data as (
     select a.USER_PK, a.legal_type, a.district, a.registered_at, a.billing_mode, a.is_vip, a.mdm_hashdif, a.effective_from, a.LOAD_DATE, a.RECORD_SOURCE from pdmitry.ods_mdm_hashed_v2 as a
     WHERE a.LOAD_DATE = '{{ execution_date }}'::TIMESTAMP
