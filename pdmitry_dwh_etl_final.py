@@ -14,7 +14,7 @@ default_args = {
 }
 
 dag = DAG(
-    USERNAME + '_dwh_etl',
+    USERNAME + '_dwh_etl_final',
     default_args=default_args,
     description='DWH ETL tasks for final project',
     max_active_runs=1,
@@ -26,19 +26,19 @@ def get_tasks_list(phase, source):
     for task in source[phase]:
         tasks.append(
             PostgresOperator(
-            task_id=f'{phase}_{task}_final',
+            task_id='{}_{}_final'.format(phase, task),
             dag=dag,
-            sql=f' """{source[phase][task]}""" '
+            sql='{}'.format(source[phase][task])
             )
         )
     return tasks
 
-with open('sample.json', 'r') as f:
+with open('/root/airflow/dags/pdmitry/etl_final.json', 'r') as f:
     data = json.load(f)
 
 ods_loaded = DummyOperator(task_id="ods_loaded", dag=dag)
-
-get_tasks_list('clear_ods', data) >>get_tasks_list('fill_ods', data)>> get_tasks_list('fill_hashed', data) >> ods_loaded
+separate_lists = DummyOperator(task_id="separate_lists", dag=dag)
+get_tasks_list('clear_ods', data) >> separate_lists >> get_tasks_list('fill_ods', data)>> separate_lists >> get_tasks_list('fill_hashed', data) >> ods_loaded
 
 
 all_hubs_loaded = DummyOperator(task_id="all_hubs_loaded", dag=dag)
