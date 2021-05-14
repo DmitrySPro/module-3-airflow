@@ -26,7 +26,7 @@ def get_tasks_list(phase, source):
     for task in source[phase]:
         tasks.append(
             PostgresOperator(
-            task_id=f"{phase}_{task}_final",
+            task_id='{}_{}_final'.format(phase, task),
             dag=dag,
             sql=f' """{source[phase][task]}""" '
             )
