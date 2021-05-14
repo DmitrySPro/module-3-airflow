@@ -14,7 +14,7 @@ default_args = {
 }
 
 dag = DAG(
-    USERNAME + '_dwh_etl',
+    USERNAME + '_dwh_etl_final',
     default_args=default_args,
     description='DWH ETL tasks for final project',
     max_active_runs=1,
