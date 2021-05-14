@@ -28,7 +28,7 @@ def get_tasks_list(phase, source):
             PostgresOperator(
             task_id='{}_{}_final'.format(phase, task),
             dag=dag,
-            sql='"""{}"""'.format(source[phase][task])
+            sql='{}'.format(source[phase][task])
             )
         )
     return tasks
