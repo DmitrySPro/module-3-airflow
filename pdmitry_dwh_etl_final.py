@@ -33,7 +33,7 @@ def get_tasks_list(phase, source):
         )
     return tasks
 
-with open('etl_final.json', 'r') as f:
+with open('/root/airflow/dags/pdmitry/etl_final.json', 'r') as f:
     data = json.load(f)
 
 ods_loaded = DummyOperator(task_id="ods_loaded", dag=dag)
