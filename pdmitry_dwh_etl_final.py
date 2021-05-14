@@ -37,8 +37,10 @@ with open('/root/airflow/dags/pdmitry/etl_final.json', 'r') as f:
     data = json.load(f)
 
 ods_loaded = DummyOperator(task_id="ods_loaded", dag=dag)
-separate_lists = DummyOperator(task_id="separate_lists", dag=dag)
-get_tasks_list('clear_ods', data) >> separate_lists >> get_tasks_list('fill_ods', data)>> separate_lists >> get_tasks_list('fill_hashed', data) >> ods_loaded
+ods_cleared = DummyOperator(task_id="ods_cleared", dag=dag)
+ods_filled = DummyOperator(task_id="ods_filled", dag=dag)
+
+get_tasks_list('clear_ods', data) >> ods_cleared >> get_tasks_list('fill_ods', data)>> ods_filled >> get_tasks_list('fill_hashed', data) >> ods_loaded
 
 
 all_hubs_loaded = DummyOperator(task_id="all_hubs_loaded", dag=dag)
