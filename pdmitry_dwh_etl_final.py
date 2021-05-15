@@ -58,5 +58,14 @@ all_sats_loaded = DummyOperator(task_id="all_sats_loaded", dag=dag)
 
 all_links_loaded >> get_tasks_list('sat', data) >> all_sats_loaded
 
+payment_report_temp_created = DummyOperator(task_id="payment_report_temp_created", dag=dag)
+
+payment_report_dim_loaded = DummyOperator(task_id="payment_report_dim_loaded", dag=dag)
+
+payment_report_fct_loaded = DummyOperator(task_id="payment_report_fct_loaded", dag=dag)
+
+all_sats_loaded >>  get_tasks_list('payment_report_temp', data) >> payment_report_temp_created >> get_tasks_list('payment_report_dim', data) >> payment_report_dim_loaded >> get_tasks_list('payment_report_fct', data) >> payment_report_fct_loaded >> get_tasks_list('drop_payment_report_temp', data)
+
+
 
 
