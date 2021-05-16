@@ -5,7 +5,7 @@ import json
 from airflow import DAG
 from airflow.operators.postgres_operator import PostgresOperator
 from airflow.operators.dummy_operator import DummyOperator
-
+from airflow.operators.latest_only_operator import LatestOnlyOperator
 USERNAME = 'pdmitry'
 
 default_args = {
@@ -64,7 +64,9 @@ payment_report_dim_loaded = DummyOperator(task_id="payment_report_dim_loaded", d
 
 payment_report_fct_loaded = DummyOperator(task_id="payment_report_fct_loaded", dag=dag)
 
-all_sats_loaded >>  get_tasks_list('payment_report_temp', data) >> payment_report_temp_created >> get_tasks_list('payment_report_dim', data) >> payment_report_dim_loaded >> get_tasks_list('payment_report_fct', data) >> payment_report_fct_loaded >> get_tasks_list('drop_payment_report_temp', data)
+latest_only_DM = LatestOnlyOperator(task_id="latest_only_DM", dag=dag)
+
+all_sats_loaded >> latest_only_DM >> get_tasks_list('payment_report_temp', data) >> payment_report_temp_created >> get_tasks_list('payment_report_dim', data) >> payment_report_dim_loaded >> get_tasks_list('payment_report_fct', data) >> payment_report_fct_loaded >> get_tasks_list('drop_payment_report_temp', data)
 
 
 
