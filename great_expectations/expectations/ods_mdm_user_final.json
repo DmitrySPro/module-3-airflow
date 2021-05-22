@@ -1,0 +1,208 @@
+{
+  "data_asset_type": "Dataset",
+  "expectation_suite_name": "ods_mdm_user_final",
+  "expectations": [
+    {
+      "expectation_type": "expect_table_columns_to_match_ordered_list",
+      "kwargs": {
+        "column_list": [
+          "id",
+          "legal_type",
+          "district",
+          "registered_at",
+          "billing_mode",
+          "is_vip"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_table_row_count_to_be_between",
+      "kwargs": {
+        "max_value": 126,
+        "min_value": 126
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "id"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "id",
+        "min_value": 0
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_proportion_of_unique_values_to_be_between",
+      "kwargs": {
+        "column": "id",
+        "min_value": 0.01
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "id",
+        "type_list": [
+          "INTEGER"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "legal_type"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_distinct_values_to_equal_set",
+      "kwargs": {
+        "column": "legal_type",
+        "value_set": [
+          "\u0424\u0438\u0437\u043b\u0438\u0446\u043e",
+          "\u042e\u0440\u043b\u0438\u0446\u043e"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "legal_type",
+        "type_list": [
+          "TEXT"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "district"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "district",
+        "type_list": [
+          "TEXT"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_distinct_values_to_equal_set",
+      "kwargs": {
+        "column": "district",
+        "value_set": [
+          "\u0421\u0417\u0424\u041e",
+          "\u0421\u041a\u0424\u041e",
+          "\u0421\u0424\u041e",
+          "\u0423\u0440\u0424\u041e",
+          "\u0414\u0424\u041e",
+          "\u041f\u0424\u041e",
+          "\u0426\u0424\u041e",
+          "\u042e\u0424\u041e"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "registered_at"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "registered_at",
+        "type_list": [
+          "TIMESTAMP"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "billing_mode"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "billing_mode",
+        "type_list": [
+          "TEXT"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_distinct_values_to_equal_set",
+      "kwargs": {
+        "column": "billing_mode",
+        "value_set": [
+          "\u041f\u0440\u0435\u0434\u043e\u043f\u043b\u0430\u0442\u043d\u044b\u0439",
+          "\u041f\u043e\u0441\u0442\u043e\u043f\u043b\u0430\u0442\u043d\u044b\u0439"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "is_vip"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_type_list",
+      "kwargs": {
+        "column": "is_vip",
+        "type_list": [
+          "BOOLEAN"
+        ]
+      },
+      "meta": {}
+    }
+  ],
+  "meta": {
+    "columns": {
+      "billing_mode": {
+        "description": ""
+      },
+      "district": {
+        "description": ""
+      },
+      "id": {
+        "description": ""
+      },
+      "is_vip": {
+        "description": ""
+      },
+      "legal_type": {
+        "description": ""
+      },
+      "registered_at": {
+        "description": ""
+      }
+    },
+    "great_expectations_version": "0.13.14"
+  }
+}
